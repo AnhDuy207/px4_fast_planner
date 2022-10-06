@@ -72,3 +72,31 @@ pose:
 * Some notes related to tuning parameters of the availabe planners
 * Some notes related to the limitations of the available planners
 * Instructions to run the setup on real drone
+
+
+# Run simulation AirSim with GazeboDrone
+* Follow this link to setting file setting.json: [GazeboDrone](https://microsoft.github.io/AirSim/gazebo_drone/)
+* Open a termianl, and run the following command,
+```sh
+roslaunch px4_fast_planner px4_fast_planner.launch
+```
+* Press button "Play" in AirSim simulation.
+
+* Connect Drone in AirSim with Drone in Gazebo,
+```sh
+cd IVSR/AirSim/GazeboDrone/build/
+./GazeboDrone
+```
+* Export topics from AirSim environment,
+```sh
+roslaunch airsim_ros_pkgs airsim_node.launch
+```
+
+* Convert frames_id="camera_1_optical" of rostopic "/airsim_node/PX4/camera_1/DepthPlanar" to frames_if="camera_link" of rostopic "/depth_topic_2",
+```sh
+python visualize-data.py
+```
+
+* Check frames: [AirSim_GazeboDrone_px4_fast_planner](https://husteduvn-my.sharepoint.com/:b:/g/personal/duy_na182464_sis_hust_edu_vn/EcM81GUHP2VIrSWq3egz00sBx3o3Eabti9FLfPROb0Pdtg?e=Vg7THn)
+
+* Video demo: [Video](https://husteduvn-my.sharepoint.com/personal/duy_na182464_sis_hust_edu_vn/_layouts/15/stream.aspx?id=%2Fpersonal%2Fduy%5Fna182464%5Fsis%5Fhust%5Fedu%5Fvn%2FDocuments%2FIVSR%5FLab%2Fvideo%20simulation%2FGazebo%5FAirSim%5FPlanning%5FIncrease%5F4HZ%5FCamera%2Emp4&ga=1)
