@@ -12,6 +12,11 @@ from quadrotor_msgs.msg import PositionCommand # for Fast-Planner
 from geometry_msgs.msg import Transform, Twist
 from tf.transformations import quaternion_from_euler
 
+# DuyNguyen
+# import roslib
+# roslib.load_manifest('learning_tf')
+# import tf
+
 class MessageConverter:
     def __init__(self):
         rospy.init_node('trajectory_msg_converter')
@@ -58,6 +63,14 @@ class MessageConverter:
         traj_msg.header = msg.header
         traj_msg.points.append(traj_point)
         self.traj_pub.publish(traj_msg)
+
+        # # DuyNguyen
+        # br = tf.TransformBroadcaster()
+        # br.sendTransform((msg.x msg.position.y, msg.position.z),
+        #              tf.transformations.quaternion_from_euler(msg.roll, msg.pitch, msg.yaw),
+        #              rospy.Time.now(),
+        #              "base_link", #turtlename
+        #              "PX4")   #world
 
 if __name__ == '__main__':
     obj = MessageConverter()

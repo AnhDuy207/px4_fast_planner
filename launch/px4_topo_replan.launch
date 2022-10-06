@@ -35,6 +35,12 @@
     <arg name="fx" value="343.49636753580074"/>
     <arg name="fy" value="343.49636753580074"/>
 
+    <!--DuyNguyen
+    <arg name="cx" value="320"/>
+    <arg name="cy" value="240"/>
+    <arg name="fx" value="320"/>
+    <arg name="fy" value="320"/>-->
+
 
 
     <!-- maximum velocity and acceleration the drone will reach -->
@@ -46,11 +52,11 @@
     <arg name="flight_type" value="1" />
 
     <!-- global waypoints -->
-    <arg name="point_num" value="2" />
+    <arg name="point_num" value="3" />
 
-    <arg name="point0_x" value="19.0" />
-    <arg name="point0_y" value="0.0" />
-    <arg name="point0_z" value="1.0" />
+    <arg name="point0_x" value="22.0" />
+    <arg name="point0_y" value="22.0" />
+    <arg name="point0_z" value="2.5" />
 
     <!-- set more waypoints if you need -->
     <arg name="point1_x" value="0.0" />

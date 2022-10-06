@@ -109,36 +109,36 @@ if [ "$BUILD_PX4" != "false" ]; then
 
 
     #Setting up PX4 Firmware
-    if [ ! -d "${HOME}/Firmware" ]; then
+    if [ ! -d "${HOME}/px4/Firmware" ]; then
         cd ${HOME}
         git clone https://github.com/PX4/Firmware
     else
         echo "Firmware already exists. Just pulling latest upstream...."
-        cd ${HOME}/Firmware
+        cd ${HOME}/px4/Firmware
         git pull
     fi
-    cd ${HOME}/Firmware
+    cd ${HOME}/px4/Firmware
     make clean && make distclean
     git checkout v1.10.1 && git submodule init && git submodule update --recursive
-    cd ${HOME}/Firmware/Tools/sitl_gazebo/external/OpticalFlow
+    cd ${HOME}/px4/Firmware/Tools/sitl_gazebo/external/OpticalFlow
     git submodule init && git submodule update --recursive
-    cd ${HOME}/Firmware/Tools/sitl_gazebo/external/OpticalFlow/external/klt_feature_tracker
+    cd ${HOME}/px4/Firmware/Tools/sitl_gazebo/external/OpticalFlow/external/klt_feature_tracker
     git submodule init && git submodule update --recursive
-    # NOTE: in PX4 v1.10.1, there is a bug in Firmware/Tools/sitl_gazebo/include/gazebo_opticalflow_plugin.h:43:18
+    # NOTE: in PX4 v1.10.1, there is a bug in px4/Firmware/Tools/sitl_gazebo/include/gazebo_opticalflow_plugin.h:43:18
     # #define HAS_GYRO TRUE needs to be replaced by #define HAS_GYRO true
-    sed -i 's/#define HAS_GYRO.*/#define HAS_GYRO true/' ${HOME}/Firmware/Tools/sitl_gazebo/include/gazebo_opticalflow_plugin.h
-    cd ${HOME}/Firmware
+    sed -i 's/#define HAS_GYRO.*/#define HAS_GYRO true/' ${HOME}/px4/Firmware/Tools/sitl_gazebo/include/gazebo_opticalflow_plugin.h
+    cd ${HOME}/px4/Firmware
     DONT_RUN=1 make px4_sitl gazebo
 
     #Copying this to  .bashrc file
-    grep -xF 'source ~/Firmware/Tools/setup_gazebo.bash ~/Firmware ~/Firmware/build/px4_sitl_default' ${HOME}/.bashrc || echo "source ~/Firmware/Tools/setup_gazebo.bash ~/Firmware ~/Firmware/build/px4_sitl_default" >> ${HOME}/.bashrc
-    grep -xF 'export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:~/Firmware' ${HOME}/.bashrc || echo "export ROS_PACKAGE_PATH=\$ROS_PACKAGE_PATH:~/Firmware" >> ${HOME}/.bashrc
-    grep -xF 'export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:~/Firmware/Tools/sitl_gazebo' ${HOME}/.bashrc || echo "export ROS_PACKAGE_PATH=\$ROS_PACKAGE_PATH:~/Firmware/Tools/sitl_gazebo" >> ${HOME}/.bashrc
+    grep -xF 'source ~/px4/Firmware/Tools/setup_gazebo.bash ~/px4/Firmware ~/px4/Firmware/build/px4_sitl_default' ${HOME}/.bashrc || echo "source ~/px4/Firmware/Tools/setup_gazebo.bash ~/px4/Firmware ~/px4/Firmware/build/px4_sitl_default" >> ${HOME}/.bashrc
+    grep -xF 'export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:~/px4/Firmware' ${HOME}/.bashrc || echo "export ROS_PACKAGE_PATH=\$ROS_PACKAGE_PATH:~/px4/Firmware" >> ${HOME}/.bashrc
+    grep -xF 'export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:~/px4/Firmware/Tools/sitl_gazebo' ${HOME}/.bashrc || echo "export ROS_PACKAGE_PATH=\$ROS_PACKAGE_PATH:~/px4/Firmware/Tools/sitl_gazebo" >> ${HOME}/.bashrc
     grep -xF 'export GAZEBO_PLUGIN_PATH=$GAZEBO_PLUGIN_PATH:/usr/lib/x86_64-linux-gnu/gazebo-9/plugins' ${HOME}/.bashrc || echo "export GAZEBO_PLUGIN_PATH=\$GAZEBO_PLUGIN_PATH:/usr/lib/x86_64-linux-gnu/gazebo-9/plugins" >> ${HOME}/.bashrc
     grep -xF 'export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:'${HOME}'/catkin_ws/src/px4_fast_planner/models' ${HOME}/.bashrc || echo "export GAZEBO_MODEL_PATH=\$GAZEBO_MODEL_PATH:${HOME}/catkin_ws/src/px4_fast_planner/models" >> ${HOME}/.bashrc
 
     # Copy PX4 SITL param file
-    cp $CATKIN_SRC/px4_fast_planner/config/10017_iris_depth_camera ${HOME}/Firmware/ROMFS/px4fmu_common/init.d-posix/
+    cp $CATKIN_SRC/px4_fast_planner/config/10017_iris_depth_camera ${HOME}/px4/Firmware/ROMFS/px4fmu_common/init.d-posix/
 
     source ${HOME}/.bashrc
 fi
